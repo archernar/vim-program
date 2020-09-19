@@ -12,8 +12,9 @@ function! JavaLocal(...)
     silent let l:n = 0
     silent set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
     silent let g:JAVACOMPILE="javac -nowarn -cp . -d . " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="javac -nowarn -cp ~/classes -d ~/classes " . shellescape(expand('%:p'))
+    silent let g:JAVACOMPILE="javac -nowarn -cp ./classes -d ./classes " . shellescape(expand('%:p'))
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
+    silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent call BiModeSet(1)
 endfunction
 
@@ -95,14 +96,14 @@ function! JavaRun(...)
 		silent execute "!clear"
 		silent execute "!java -version 2>&1 >/dev/null | grep Environment"
                 silent execute "!print 'COMMAND=" . l:cmd . "'"
-		silent execute "!print 'CLASSPATH='$CLASSPATH"
+		silent execute "!print 'CLASSPATH='$CLASSPATH" | tee out
 		silent execute "!print '+'"
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
-		silent execute "!print '+'"
-                silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
+		"silent execute "!print '+'"
+                "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
                 let sz="SOURCE CODE"
 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee out" 
-                silent execute "!cat " . expand("%:p") . " | tee -a out" 
+                silent execute "!cat " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
                 let sz="RUN"
 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee -a out" 
 		silent execute "!java -version 2>&1 >/dev/null | grep Environment | tee -a out"
