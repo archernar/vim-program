@@ -12,12 +12,16 @@ function! JavaLocal(...)
     silent set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
     silent let g:JAVACOMPILE="javac -nowarn -cp . -d . " . shellescape(expand('%:p'))
     silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
-    
     silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
     silent let g:JAVACOMPILE="javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
+
+    silent let g:JAVACOMPILE="javac -nowarn -d ./classes " . shellescape(expand('%:p'))
+
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
+
+    silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
 endfunction
 
 
