@@ -9,27 +9,28 @@ rm $Tmp  >/dev/null 2>&1
 REPO=vim-program
 FILE=program.vim
 LOCAL=""
-while getopts "l" arg
+while getopts "lg" arg
 do
 	case $arg in
-            l) LOCAL="yes" ;;
+            l) LOCAL="yes" 
+               ANON=`date`
+               print $ANON
+               print "Local Deployment..."
+               cp plugin/$FILE $HOME/.vim/bundle/$REPO/plugin/$FILE
+               ls -l $HOME/.vim/bundle/$REPO/plugin/$FILE
+               exit 0
+               ;;
+            g) LOCAL="no" 
+               git add plugin/$FILE
+               git add README.md
+               git add pushit
+               git commit -m "Update"
+               git push -u origin master
+               exit 0
+               ;;
         esac
 done
-ANON=`date`
-print $ANON
-print "Local Deployment..."
-cp plugin/$FILE $HOME/.vim/bundle/$REPO/plugin/$FILE
 
 
-if [ "$LOCAL" == "" ] ; then
-     IP=192.168.1.1
-     fping -c1 -t300 $IP 2>/dev/null 1>/dev/null
-     if [ $? -eq 0 ] ; then
-          git add plugin/$FILE
-          git add README.md
-          git add pushit
-          git commit -m "Update"
-          git push -u origin master
-     fi
-fi
-
+# if [ "$LOCAL" == "" ] ; then
+# fi
