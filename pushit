@@ -26,6 +26,9 @@ do
                git add pushit
                git commit -m "Update"
                git push -u origin master
+               print "Local Deployment..."
+               cp plugin/$FILE $HOME/.vim/bundle/$REPO/plugin/$FILE
+               ls -l $HOME/.vim/bundle/$REPO/plugin/$FILE
                exit 0
                ;;
         esac
