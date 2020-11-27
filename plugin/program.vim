@@ -5,7 +5,6 @@ function! PythonLocal(...)
     silent set errorformat=\%*\\sFile\ \"%f\"\\,\ line\ %l\\,\ %m,
     silent let g:PYTHONRUN =   "python  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:PYTHONRUN =   "python  " . "" . expand("%")
-    silent call BiModeSet(1)
 endfunction
 
 function! JavaLocal(...)
@@ -19,7 +18,6 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent call BiModeSet(1)
 endfunction
 
 
@@ -51,6 +49,7 @@ function! JavaCompile(...)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
+           silent call BiModeSet(0)
            resize 10
         endif
 endfunction
