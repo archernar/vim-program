@@ -9,7 +9,7 @@ rm $Tmp  >/dev/null 2>&1
 REPO=vim-program
 FILE=program.vim
 LOCAL=""
-while getopts "lgc" arg
+while getopts "lgca:" arg
 do
 	case $arg in
             l) LOCAL="yes" 
@@ -18,6 +18,14 @@ do
                print "Local Deployment..."
                cp plugin/$FILE $HOME/.vim/bundle/$REPO/plugin/$FILE
                ls -l $HOME/.vim/bundle/$REPO/plugin/$FILE
+               exit 0
+               ;;
+            a) F=$OPTARG 
+               echo "$F"
+               git add "$F"
+               git commit -m "Initial Version"
+               git push -u origin master
+               print "Local Deployment..."
                exit 0
                ;;
             g) LOCAL="no" 
