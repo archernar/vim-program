@@ -20,6 +20,7 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
 
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
 endfunction
