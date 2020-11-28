@@ -9,7 +9,7 @@ rm $Tmp  >/dev/null 2>&1
 REPO=vim-program
 FILE=program.vim
 LOCAL=""
-while getopts "lg" arg
+while getopts "lgc" arg
 do
 	case $arg in
             l) LOCAL="yes" 
@@ -29,6 +29,10 @@ do
                print "Local Deployment..."
                cp plugin/$FILE $HOME/.vim/bundle/$REPO/plugin/$FILE
                ls -l $HOME/.vim/bundle/$REPO/plugin/$FILE
+               exit 0
+               ;;
+            c) print "Clearing Local Deployment..."
+               rm -rf $HOME/.vim/bundle/$REPO
                exit 0
                ;;
         esac
