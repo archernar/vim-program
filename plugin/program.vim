@@ -108,6 +108,7 @@ function! JavaRun(...)
                 let sz="RUN"
 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee -a out" 
 
-                execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
+"               execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
+                execute "!" . g:JAVARUN . " " . " arg_1 "  . " | tee -a out"
         endif
 endfunction
