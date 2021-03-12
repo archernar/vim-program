@@ -54,7 +54,7 @@ function! JavaCompile(...)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
-           silent call BiModeSet(0)
+           "silent call BiModeSet(0)
            resize 10
         endif
 endfunction
