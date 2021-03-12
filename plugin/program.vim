@@ -54,6 +54,7 @@ function! JavaCompile(...)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
+           autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
            silent call BiModeSet(0)
            resize 10
         endif
