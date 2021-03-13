@@ -1,4 +1,7 @@
-
+"
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>:silent call BiModeSet(1)<CR>
+" in .vimrc to get the quickfix buffer/split to close on selection
+"
 
 function! PythonLocal(...)
     silent let l:n = 0
