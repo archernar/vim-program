@@ -19,13 +19,15 @@ function! JavaLocal(...)
     silent let g:JAVACOMPILE="javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
 
     silent let g:JAVACOMPILE="javac -nowarn -d ./classes " . shellescape(expand('%:p'))
+    silent let g:JAVACOMPILE="javac -nowarn -d ". $CLASSPATH . " " . shellescape(expand('%:p'))
 
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
-
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
+    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
 endfunction
 
 
@@ -108,6 +110,7 @@ function! JavaRun(...)
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
 		silent execute "!javac -version"
 		silent execute "!java -version"
+		silent execute "!echo $CLASSPATH"
 		silent execute "!print '+'"
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
