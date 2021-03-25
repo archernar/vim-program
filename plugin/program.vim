@@ -48,7 +48,7 @@ function! ProgramRun(...)
 endfunction
 
 
-function! s:LogMessage(...)
+function s:LogMessage(...)
     let l:ret = 0
     return l:ret
     let l:messages=[]
@@ -63,7 +63,7 @@ function! JavaCompile(...)
         update
         cclose
         silent echom expand("%:p") 
-        s:LogMessage(g:JAVACOMPILE)
+        call s:LogMessage(g:JAVACOMPILE)
         cexpr system(g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
