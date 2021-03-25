@@ -28,10 +28,13 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
+    call s:LogMessage(" ")
     call s:LogMessage("JAVA RUN")
     call s:LogMessage(g:JAVARUN)
+    call s:LogMessage(" ")
     call s:LogMessage("JAVA COMPILE")
     call s:LogMessage(g:JAVACOMPILE)
+    call s:LogMessage(" ")
 endfunction
 
 
