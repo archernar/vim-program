@@ -28,6 +28,10 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
+    call s:LogMessage("JAVA RUN")
+    call s:LogMessage(g:JAVARUN)
+    call s:LogMessage("JAVA COMPILE")
+    call s:LogMessage(g:JAVACOMPILE)
 endfunction
 
 
@@ -63,7 +67,6 @@ function! JavaCompile(...)
         update
         cclose
         silent echom expand("%:p") 
-        call s:LogMessage(g:JAVACOMPILE)
         cexpr system(g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
