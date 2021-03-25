@@ -50,7 +50,7 @@ endfunction
 
 function s:LogMessage(...)
     let l:ret = 0
-    return l:ret
+    "return l:ret
     let l:messages=[]
     call add(l:messages, a:1)
     call writefile(l:messages, "/tmp/vimscript.log", "a")
@@ -95,7 +95,6 @@ endfunction
 
 function! JavaRun(...)
         silent execute "normal "
-        call s:LogMessage("Java Run")
         silent call JavaLocal()
         update
         cclose
@@ -122,7 +121,6 @@ function! JavaRun(...)
 		silent execute "!java -version"
 		
 		silent execute "!print '+'"
-call s:LogMessage("ZIKE")
 		silent execute "!print '+'"
                 silent execute "!echo $CLASSPATH"
 		silent execute "!print '+'"
