@@ -110,7 +110,8 @@ function! JavaRun(...)
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
 		silent execute "!javac -version"
 		silent execute "!java -version"
-		silent execute "!echo $CLASSPATH"
+		
+                silent execute "!echo $CLASSPATH"
 		silent execute "!print '+'"
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
