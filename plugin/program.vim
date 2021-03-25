@@ -48,6 +48,14 @@ function! ProgramRun(...)
 endfunction
 
 
+function s:LogMessage(...)
+    let l:ret = 0
+    return l:ret
+    let l:messages=[]
+    call add(l:messages, a:1)
+    call writefile(l:messages, "/tmp/vimscript.log", "a")
+    return l:ret
+endfunction
 
 function! JavaCompile(...)
         silent execute "normal "
@@ -55,7 +63,7 @@ function! JavaCompile(...)
         update
         cclose
         silent echom expand("%:p") 
-        g:LogMessage(g:JAVACOMPILE)
+        s:LogMessage(g:JAVACOMPILE)
         cexpr system(g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
