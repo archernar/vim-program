@@ -20,6 +20,7 @@ function! JavaLocal(...)
 
     silent let g:JAVACOMPILE="javac -nowarn -d ./classes " . shellescape(expand('%:p'))
     silent let g:JAVACOMPILE="javac -nowarn -d ". $CLASSPATH . " " . shellescape(expand('%:p'))
+    silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
 
     silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
