@@ -95,6 +95,7 @@ endfunction
 
 function! JavaRun(...)
         silent execute "normal "
+        call s:LogMessage("Java Run")
         silent call JavaLocal()
         update
         cclose
