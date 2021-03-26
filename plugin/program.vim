@@ -29,7 +29,9 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    silent let g:JVMCMD =   "java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
     call s:LogMessage(" ")
     call s:LogMessage("JAVA RUN")
     call s:LogMessage(g:JAVARUN)
@@ -127,11 +129,12 @@ function! JavaRun(...)
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
 		silent execute "!javac -version"
 		silent execute "!java -version"
-		
 		silent execute "!print '+'"
+		silent execute "!print 'JVM Command Line'"
+		silent execute "!print '" . g:JVMCMD . "'"
 		silent execute "!print '+'"
+		silent execute "!print 'CLASSPATH'"
                 silent execute "!echo $CLASSPATH"
-		silent execute "!print '+'"
 		silent execute "!print '+'"
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
