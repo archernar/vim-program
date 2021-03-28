@@ -59,7 +59,7 @@ function! ProgramRun(...)
 endfunction
 
 
-function s:LogMessage(...)
+function! s:LogMessage(...)
     let l:ret = 0
     "return l:ret
     let l:messages=[]
