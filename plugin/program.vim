@@ -31,7 +31,12 @@ function! JavaLocal(...)
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
     silent let g:JVMCMD =   "java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms2048m -Xmx2048m -Xss1024m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    
+    " JVM_OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
+
+    silent let g:JVMCMD =   "java " . $JVM_OPTARGS . "" . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
+
     call s:LogMessage(" ")
     call s:LogMessage("JAVA RUN")
     call s:LogMessage(g:JAVARUN)
