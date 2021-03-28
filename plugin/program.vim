@@ -34,7 +34,7 @@ function! JavaLocal(...)
     
     " export JVM_OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
 
-    silent let g:JVMCMD =   "java " . $JVM_OPTARGS . "" . g:Strreplace(expand("%:t"),".java","")
+    silent let g:JVMCMD =   "java" . " " . $JVM_OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
 
     call s:LogMessage(" ")
