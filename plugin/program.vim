@@ -32,7 +32,6 @@ function! JavaLocal(...)
     silent let g:JVMCMD =   "java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms2048m -Xmx2048m -Xss1024m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
     
-    silent let g:OPTARGS=$JVM_OPTARGS
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
 
     silent let g:JVMCMD =   "java" . " " . $JVM_OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
@@ -138,8 +137,7 @@ function! JavaRun(...)
 		silent execute "!print '+'"
 		silent execute "!print 'JVM Command Line'"
 		silent execute "!print '" . g:JVMCMD . "'"
-		silent execute "!print 'JVM Optional Arguments'"
-		silent execute "!print '" . g:OPTARGS . "'"
+		silent execute "!print 'JVM Sample Optional Arguments'"
 		silent execute "!print '" . g:OPTARGS_SAMPLE . "'"
 		silent execute "!print '+'"
 		silent execute "!print 'CLASSPATH'"
