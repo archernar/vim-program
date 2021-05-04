@@ -146,9 +146,10 @@ function! JavaRun(...)
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
                 "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
-                let sz="Source Code"
-		silent execute "!print '" . sz . "  " . repeat('+', 78 - len(sz) ) "' | tee out" 
-                silent execute "!cat " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
+" HERE 3
+"       let sz="Source Code"
+"  		silent execute "!print '" . sz . "  " . repeat('+', 78 - len(sz) ) "' | tee out" 
+"       silent execute "!cat " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
 
 "               let sz=""
 " 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee -a out" 
