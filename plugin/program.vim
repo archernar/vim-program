@@ -146,7 +146,7 @@ function! JavaRun(...)
                 silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
                 "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
-" HERE 3
+" DISPLAY SOURCE
 "       let sz="Source Code"
 "  		silent execute "!print '" . sz . "  " . repeat('+', 78 - len(sz) ) "' | tee out" 
 "       silent execute "!cat " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
@@ -154,8 +154,9 @@ function! JavaRun(...)
 "               let sz=""
 " 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee -a out" 
 " 		silent execute "!java -version 2>&1 >/dev/null | grep Environment | tee -a out"
-                let sz="Program output is below"
-		silent execute "!print '" . sz . "  " . repeat('+', 78 - len(sz) ) "' | tee -a out" 
+        let sz="Program output is below this line"
+		silent execute "!print '" . sz . "'"
+		silent execute "!print '" . repeat('+', 78 - len(sz) ) "' | tee -a out" 
 
                 execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
         endif
