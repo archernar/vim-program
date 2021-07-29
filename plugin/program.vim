@@ -34,6 +34,8 @@ function! JavaLocal(...)
     
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
 
+
+    silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
     silent let g:JVMCMD =   "java" . " " . $JVM_OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
 
@@ -71,6 +73,10 @@ function! s:LogMessage(...)
     call add(l:messages, a:1)
     call writefile(l:messages, "/tmp/vimscript.log", "a")
     return l:ret
+endfunction
+
+function! s:dq(...)
+    return "\"" a:1 "\""
 endfunction
 
 function! JavaCompile(...)
@@ -132,32 +138,49 @@ function! JavaRun(...)
 		endwhile
 		silent execute "!clear"
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
+		" silent execute "!java -version"
 		silent execute "!javac -version"
-		silent execute "!java -version"
-		silent execute "!print '+'"
-		silent execute "!print 'JVM Command Line'"
-		silent execute "!print '" . g:JVMCMD . "'"
-		silent execute "!print 'JVM Sample Optional Arguments'"
-		silent execute "!print '" . g:OPTARGS_SAMPLE . "'"
-		silent execute "!print '+'"
-		silent execute "!print 'CLASSPATH'"
-                silent execute "!echo $CLASSPATH"
-		silent execute "!print '+'"
-                silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
+		silent execute "!echo -n  'JVM CL '"
+		silent execute "!echo '" . g:JVMCMD . "'"
+		silent execute "!echo -n 'JVM OA  '"
+		silent execute "!echo '" . g:OPTARGS . "'"
+		silent execute "!echo -n 'JVM CP  '"
+        silent execute "!echo $CLASSPATH"
+        silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
 		"silent execute "!print '+'"
-                "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
+        "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
 " DISPLAY SOURCE
-"       let sz="Source Code"
-"  		silent execute "!print '" . sz . "  " . repeat('+', 78 - len(sz) ) "' | tee out" 
-"       silent execute "!cat " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
+       let sz=""
+       silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
 
-"               let sz=""
-" 		silent execute "!print '" . sz . repeat('+', 80 - len(sz) ) "' | tee -a out" 
-" 		silent execute "!java -version 2>&1 >/dev/null | grep Environment | tee -a out"
-        let sz="Program output is below this line"
-		silent execute "!print '" . sz . "'"
-		silent execute "!print '" . repeat('+', 78 - len(sz) ) "' | tee -a out" 
+"       let sz=""
+        let sz="Program output follows"
+"  		silent execute "!print '" . sz . "'"
+  		silent execute "!print '" . repeat('-', 132 - len(sz) ) "' | tee -a out" 
 
-                execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
+        execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
         endif
+endfunction
+function! JavaRun2(...)
+                let l:body=[]
+                call add(l:body, "echo ====================================================="  )
+                call add(l:body, "echo Running Java Program"  )
+                call add(l:body, "echo ====================================================="  )
+                call add(l:body, "echo "  )
+                call add(l:body, g:JAVARUN)
+                call add(l:body, "echo "  )
+                call add(l:body, "echo "  )
+                call writefile(l:body, "/tmp/sh.sh")
+                " ######################################
+                " geometry WIDTHxHEIGHT+XOFF+YOFF
+                " TOP SCREEN UPPER LEFT   4x4+100+0
+                " BOT SCREEN UPPER LEFT   4x4+100+1125
+                " The right side is about 1500 or so
+                " ######################################
+                execute "!gnome-terminal --geometry=100x11+1100+1125 -- bash -c \"chmod 777 /tmp/sh.sh;/tmp/sh.sh;read \" &"
+                "execute "!gnome-terminal --geometry=100x11+1100+1125 -- bash -c \"chmod 777 /tmp/sh.sh;/tmp/sh.sh;exec bash \" &"
+
+                "execute "!gnome-terminal -fa 'Monospace' -fs 10 -geometry 93x31+100+1350 -e \"" "chmod 777 /tmp/sh.sh;/tmp/sh.sh" ";bash\""
+                "execute "!xterm -geometry 93x31+100+1350 -e \"" g:JAVARUN ";bash\""
+                "execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 endfunction
