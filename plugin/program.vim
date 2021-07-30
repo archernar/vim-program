@@ -85,6 +85,7 @@ function! JavaCompile(...)
         update
         cclose
         silent echom expand("%:p") 
+        echom g:JAVACOMPILE
         cexpr system(g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
@@ -140,6 +141,8 @@ function! JavaRun(...)
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
 		" silent execute "!java -version"
 		silent execute "!javac -version"
+		silent execute "!echo -n  'JAVAC  '"
+		silent execute "!echo '" . g:JAVACOMPILE . "'"
 		silent execute "!echo -n  'JVM CL '"
 		silent execute "!echo '" . g:JVMCMD . "'"
 		silent execute "!echo -n 'JVM OA  '"
