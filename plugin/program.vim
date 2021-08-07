@@ -141,7 +141,7 @@ function! JavaRun(...)
 		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
 		" silent execute "!java -version"
 		silent execute "!javac -version"
-		silent execute "!echo -n  'JAVAC  '"
+		silent execute "!echo -n  'JAVAC  ' | tee -a jout"
 		silent execute "!echo '" . g:JAVACOMPILE . "'"
 		silent execute "!echo -n  'JVM CL '"
 		silent execute "!echo '" . g:JVMCMD . "'"
