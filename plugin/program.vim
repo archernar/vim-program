@@ -13,30 +13,28 @@ endfunction
 function! JavaLocal(...)
     silent let l:n = 0
     silent set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
-    silent let g:JAVACOMPILE="javac -nowarn -cp . -d . " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
-
-    silent let g:JAVACOMPILE="javac -nowarn -d ./classes " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="javac -nowarn -d ". $CLASSPATH . " " . shellescape(expand('%:p'))
-    silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
-
-    silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
-    silent let g:JVMCMD =   "java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
-    silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms2048m -Xmx2048m -Xss1024m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    " Alternatives
+    " silent let g:JAVACOMPILE="javac -nowarn -cp . -d . " . shellescape(expand('%:p'))
+    " silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
+    " silent let g:JAVACOMPILE="export CLASSPATH=/tmp/classes; javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
+    " silent let g:JAVACOMPILE="javac -nowarn -d /tmp/classes " . shellescape(expand('%:p'))
+    " silent let g:JAVACOMPILE="javac -nowarn -d ./classes " . shellescape(expand('%:p'))
+    " silent let g:JAVACOMPILE="javac -nowarn -d ". $CLASSPATH . " " . shellescape(expand('%:p'))
+    " silent let g:JAVARUN =   "java  -d64  " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "export CLASSPATH=/tmp/classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "export CLASSPATH=./classes;java  " . " -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:r"),"./","")
+    " silent let g:JVMCMD =   "java  -Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
+    " silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms2048m -Xmx2048m -Xss1024m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
     
+    silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
-
-
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
-    silent let g:JVMCMD =   "java" . " " . $JVM_OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
+    silent let g:OPTARGS=""
+    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
 
     call s:LogMessage(" ")
@@ -68,10 +66,11 @@ endfunction
 
 function! s:LogMessage(...)
     let l:ret = 0
-    "return l:ret
-    let l:messages=[]
-    call add(l:messages, a:1)
-    call writefile(l:messages, "/tmp/vimscript.log", "a")
+    if 1 == 0
+        let l:messages=[]
+        call add(l:messages, a:1)
+        call writefile(l:messages, "/tmp/vimscript.log", "a")
+    endif
     return l:ret
 endfunction
 
@@ -138,29 +137,15 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
 		silent execute "!clear"
-		" silent execute "!java -version 2>&1 >/dev/null | grep Environment"
-		" silent execute "!java -version"
+	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
-		silent execute "!echo -n  'JAVAC  ' | tee -a jout"
-		silent execute "!echo '" . g:JAVACOMPILE . "'"
-		silent execute "!echo -n  'JVM CL '"
-		silent execute "!echo '" . g:JVMCMD . "'"
-		silent execute "!echo -n 'JVM OA  '"
-		silent execute "!echo '" . g:OPTARGS . "'"
-		silent execute "!echo -n 'JVM CP  '"
-        silent execute "!echo $CLASSPATH"
+		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
+		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
+		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+  		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
-		"silent execute "!print '+'"
-        "silent execute "!ls *.java    | gawk -f /usr/local/tools/fourcol.awk"
-" DISPLAY SOURCE
-       let sz=""
-       silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
-
-"       let sz=""
-        let sz="Program output follows"
-"  		silent execute "!print '" . sz . "'"
-  		silent execute "!print '" . repeat('-', 132 - len(sz) ) "' | tee -a out" 
-
+        silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
+  	    silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
         endif
 endfunction
