@@ -33,8 +33,9 @@ function! JavaLocal(...)
     silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
-    silent let g:OPTARGS=""
-    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","")
+    silent let g:OPTARGS="-verbose:class -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=./jvm.log"
+    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","") . "  2> ./jvm.err"
+
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
 
     call s:LogMessage(" ")
