@@ -2,6 +2,57 @@
 " autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>:silent call BiModeSet(1)<CR>
 " in .vimrc to get the quickfix buffer/split to close on selection
 "
+function! JavaFileListShort(...)
+    let l:MAXBUFFERS=255
+    let l:c=1
+    let l:body=[]
+    while l:c <= l:MAXBUFFERS 
+        if (bufexists(l:c))
+                if (getbufvar(l:c, '&buftype') == "")
+                    if !(bufname(l:c) == "")
+                       if (stridx(bufname(l:c), ".java") > -1)
+                           call add(l:body, bufname(l:c))
+                       endif
+                    endif
+                endif
+        endif
+        let l:c += 1
+    endwhile 
+
+    let l:sz = ""
+    let l:delim = ""
+    for l:l in l:body
+        let l:sz = l:sz . l:delim . l:l
+        let l:delim = " "
+    endfor
+    return l:sz
+endfunction
+
+function! JavaFileList(...)
+    let l:MAXBUFFERS=255
+    let l:c=1
+    let l:body=[]
+    while l:c <= l:MAXBUFFERS 
+        if (bufexists(l:c))
+                if (getbufvar(l:c, '&buftype') == "")
+                    if !(bufname(l:c) == "")
+                       if (stridx(bufname(l:c), ".java") > -1)
+                           call add(l:body, fnamemodify(bufname(l:c), ':p'))
+                       endif
+                    endif
+                endif
+        endif
+        let l:c += 1
+    endwhile 
+
+    let l:sz = ""
+    let l:delim = ""
+    for l:l in l:body
+        let l:sz = l:sz . l:delim . l:l
+        let l:delim = " "
+    endfor
+    return l:sz
+endfunction
 
 function! PythonLocal(...)
     silent let l:n = 0
@@ -31,6 +82,7 @@ function! JavaLocal(...)
     " silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";java  -Xms2048m -Xmx2048m -Xss1024m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log " . "" . g:Strreplace(expand("%:t"),".java","")
     
     silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
+    silent let g:JAVACOMPILEALL="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . JavaFileList()
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
     silent let g:OPTARGS="-verbose:class -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=./jvm.log"
@@ -92,6 +144,20 @@ function! JavaCompile(...)
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
            silent call BiModeSet(0)
+           resize 10
+        endif
+endfunction
+
+function! JavaCompileAll(...)
+        silent execute "normal "
+        silent call JavaLocal()
+        update
+        cclose
+        echom JavaFileListShort()
+        cexpr system(g:JAVACOMPILEALL)
+        cw
+        " Check if current window contains quickfix buffer (if cw opened  quickfix)
+        if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
            resize 10
         endif
 endfunction
