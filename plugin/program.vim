@@ -242,3 +242,56 @@ function! JavaRun2(...)
                 "execute "!xterm -geometry 93x31+100+1350 -e \"" g:JAVARUN ";bash\""
                 "execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 endfunction
+
+
+
+
+function! s:NewWindow(...)
+        " for wincmdH is Left  L is Right  K is Top  J is Bottom
+        " H is Left  L is Right  K is Top  J is Bottom
+        vnew
+        let l:sz = tolower(a:1)
+        if (l:sz == "left")
+             wincmd H
+        endif
+        if (l:sz == "right")
+             wincmd L
+        endif
+        if (l:sz == "top")
+             wincmd K
+        endif
+        if (l:sz == "bottom")
+             wincmd J
+        endif
+        setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
+        nnoremap <silent> <buffer> q :close<cr>
+        nnoremap <silent> <buffer> = :vertical resize +5<cr>
+        nnoremap <silent> <buffer> - :vertical resize -5<cr>
+        call cursor(1, 1)
+        execute "vertical resize " . a:2
+        if ( a:0 > 2)
+            execute "nnoremap <silent> <buffer> " . a:3 . "<cr>"
+        endif
+        if ( a:0 > 3)
+            execute "nnoremap <silent> <buffer> " . a:4 . "<cr>"
+        endif
+        if ( a:0 > 4)
+            execute "nnoremap <silent> <buffer> " . a:5 . "<cr>"
+        endif
+endfunction
+
+
+function! g:ProgramHelp()
+    let l:c=1
+    let l:Row=1
+    call s:NewWindow("bottom", 100)
+    call setline(l:Row, "Program Help")
+    let l:Row = l:Row + 1
+    call setline(l:Row, "Snips is leader-j")
+endfunction
+
+
+
+
+
+
