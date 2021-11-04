@@ -293,7 +293,7 @@ function! g:ProgramHelp()
     let l:c=1
     let l:Row=1
     call s:NewWindow("bottom", 100)
-    call setline(l:Row, "Help")
+    call setline(l:Row, "Program Help")
     let l:Row = l:Row + 1
     for l:l in g:help
         call setline(l:Row, l:l)
