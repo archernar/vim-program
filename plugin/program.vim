@@ -280,6 +280,9 @@ function! s:NewWindow(...)
         endif
 endfunction
 
+let g:help=[]
+call add(g:help, "Snips is leader-j")
+command! HELP   :call g:ProgramHelp() 
 
 function! g:ProgramHelp()
     let l:c=1
