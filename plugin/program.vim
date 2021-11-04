@@ -281,7 +281,10 @@ function! s:NewWindow(...)
 endfunction
 
 let g:help=[]
-call add(g:help, "Snips is leader-j")
+call add(g:help, "Snips    is leader-j")
+call add(g:help, "Buffers  is leader-b")
+call add(g:help, "My Dir   is leader-d")
+call add(g:help, "Line #s  is leader-n")
 command! HELP   :call g:ProgramHelp() 
 
 function! g:ProgramHelp()
