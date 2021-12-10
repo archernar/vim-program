@@ -302,7 +302,15 @@ function! g:ProgramHelp()
 endfunction
 
 
-
-
+function! g:IsQuickfixOpen()
+    let l:ret = 0
+    for l:l in range(1, winnr('$'))
+        if (getwinvar(l:l, '&syntax') == 'qf')
+            let l:ret = 1
+        endif
+    endfor
+    echom l:ret
+    return l:ret
+endfunction
 
 
