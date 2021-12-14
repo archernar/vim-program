@@ -205,6 +205,7 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let l:javaruncommand = "!" . g:JAVARUN . " " . arg  . " | tee -a out"
+        let l:javaruncommand = "MOE LARRY CURLY"
 		silent execute "!clear"
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
