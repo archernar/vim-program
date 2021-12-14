@@ -211,6 +211,7 @@ function! JavaRun(...)
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
 		silent execute "!echo 'vim command  : " . l:javaruncommand . "' | tee -a jout"
 
   		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
