@@ -204,12 +204,15 @@ function! JavaRun(...)
 			let arg = arg . ' ' . a
 			let idx = idx + 1
 		endwhile
+        let l:javaruncommand = "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 		silent execute "!clear"
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+		silent execute "!echo 'vim command  : " . l:javaruncommand
+
   		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
         "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
