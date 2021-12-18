@@ -210,7 +210,7 @@ function! JavaRun(...)
 		silent execute "!javac -version"
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
-		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+		silent execute "!echo 'Executed with: " . g:JVMCMD . " " . $ARGS . " "  . "' | tee -a jout"
 		silent execute "!echo 'Arguments    : " . $ARGS      . "' | tee -a jout"
 		silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
   	    silent execute "!ls -l ./classes | tee -a out" 
