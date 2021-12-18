@@ -219,9 +219,10 @@ function! JavaRun(...)
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
   	    silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         let arg = $ARGS
+		silent execute "!echo '+++ Compiling and Running" . ""      . "' | tee -a jout"
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
-		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
+		silent execute "!echo '+++ Output" . ""      . "' | tee -a jout"
 
   	    execute "!cat ./jvm.err | tee -a out" 
         endif
