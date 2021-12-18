@@ -87,7 +87,7 @@ function! JavaLocal(...)
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
     silent let g:OPTARGS="-verbose:class -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=./jvm.log"
     silent let g:OPTARGS=""
-    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","") . "  2> ./jvm.err"
+    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","") . " " . $ARGS . "  2> ./jvm.err"
 
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
 
@@ -210,7 +210,7 @@ function! JavaRun(...)
 		silent execute "!javac -version"
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
-		silent execute "!echo 'Executed with: " . g:JVMCMD . " " . $ARGS . " "  . "' | tee -a jout"
+		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
 		silent execute "!echo 'Arguments    : " . $ARGS      . "' | tee -a jout"
 		silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
   	    silent execute "!ls -l ./classes | tee -a out" 
