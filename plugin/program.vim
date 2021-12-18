@@ -210,19 +210,18 @@ function! JavaRun(...)
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
-		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
-		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
 
   		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
+		silent execute "!echo '+++            " . ""      . "' | tee -a jout"
         silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
         "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
   	    silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         let arg = $ARGS
+		silent execute "!echo 'Arguments   : " . g:ARGS      . "' | tee -a jout"
 		silent execute "!echo '+++ Compiling and Running" . ""      . "' | tee -a jout"
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
-		silent execute "!echo '+++ Output" . ""      . "' | tee -a jout"
 
   	    execute "!cat ./jvm.err | tee -a out" 
         endif
