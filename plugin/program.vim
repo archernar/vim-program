@@ -211,7 +211,7 @@ function! JavaRun(...)
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
 		silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
-  	    execute "!ls ./classes | tee -a out" 
+  	    silent execute "!ls -l ./classes | tee -a out" 
 
   		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
 		silent execute "!echo '+++            " . ""      . "' | tee -a jout"
