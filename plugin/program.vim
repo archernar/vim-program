@@ -221,8 +221,10 @@ function! JavaRun(...)
 		silent execute "!echo 'Arguments    : " . $ARGS      . "' | tee -a jout"
 		silent execute "!echo '+++ Compiling and Running" . ""      . "' | tee -a jout"
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
-		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
 
+
+		silent execute "!echo '' | tee -a jout"
+		silent execute "!echo '' | tee -a jout"
   	    execute "!cat ./jvm.err | tee -a out" 
         endif
 endfunction
