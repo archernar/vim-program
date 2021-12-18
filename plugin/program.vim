@@ -211,9 +211,8 @@ function! JavaRun(...)
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
-		silent execute "!echo 'Arguments    : " . $ARGS      . "' | tee -a jout"
 		silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
-  	    silent execute "!ls -l ./classes | tee -a out" 
+  	    silent execute "!ls -ld ./classes/* | tee -a out" 
 
   		ddsilent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
         silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
