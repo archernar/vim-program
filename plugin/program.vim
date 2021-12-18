@@ -204,7 +204,6 @@ function! JavaRun(...)
 			let arg = arg . ' ' . a
 			let idx = idx + 1
 		endwhile
-        let l:javaruncommand = "!!!!!" . g:JAVARUN . "!!!! " . arg 
 		silent execute "!clear"
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
@@ -212,7 +211,6 @@ function! JavaRun(...)
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
 		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
-		silent execute "!echo 'vim command  : " . l:javaruncommand . "' | tee -a jout"
 		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
 
   		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
@@ -220,7 +218,11 @@ function! JavaRun(...)
         "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
   	    silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
+        let arg = $ARGS
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
+		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
+		silent execute "!echo '+++          : " . ""      . "' | tee -a jout"
+
   	    execute "!cat ./jvm.err | tee -a out" 
         endif
 endfunction
