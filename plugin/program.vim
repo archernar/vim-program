@@ -206,8 +206,6 @@ function! JavaRun(...)
 		endwhile
         let arg = $ARGS
 		silent execute "!clear"
-		silent execute "!echo '' | tee -a jout"
-  		silent execute "!date | tee -a out" 
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
