@@ -211,6 +211,7 @@ function! JavaRun(...)
 		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
 		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+		silent execute "!echo 'set PROGRAMVERBOSE=Y for more details"' | tee -a jout"
 
         if ($PROGRAMVERBOSE != "")
             silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
