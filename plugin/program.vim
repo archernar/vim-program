@@ -108,6 +108,12 @@ function! ProgramCompile(...)
 endfunction
 
 
+function! g:PR()
+    silent execute "w"
+    silent execute "b 1"
+    call ProgramRun()
+endfunction
+
 function! ProgramRun(...)
         if expand("%:e") == 'java'
                call JavaRun()
