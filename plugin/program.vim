@@ -200,7 +200,7 @@ function! JavaRun(...)
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
            resize 10
- 	   let e = 100
+ 	       let e = 100
         endif
         if e == 0
 		let idx = 1
@@ -211,25 +211,21 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let arg = $ARGS
-        " if ($PROGRAMVERBOSE != "YYYY")
-        if (1 == 0)
-            silent execute "!clear"
-            silent execute "!echo -n 'Java Version : '"
-            silent execute "!javac -version"
-            silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
-            silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
-            silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
-            silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
-            silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
-            silent execute "!ls -ld ./classes/* | tee -a out" 
-        endif
-
-            silent execute "!clear"
-  		silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
-
-        "silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
-        "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
-
+            " if ($PROGRAMVERBOSE != "YYYY")
+            if (1 == 0)
+                silent execute "!clear"
+                silent execute "!echo -n 'Java Version : '"
+                silent execute "!javac -version"
+                silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
+                silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
+                silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+                silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
+                silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
+                silent execute "!ls -ld ./classes/* | tee -a out" 
+                silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
+            endif
+                "silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
+                "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
         endif
 
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
