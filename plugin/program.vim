@@ -211,7 +211,7 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let arg = $ARGS
-        if ($PROGRAMVERBOSE != "Y")
+        if ($PROGRAMVERBOSE != "YYYY")
 		silent execute "!clear"
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
@@ -229,14 +229,13 @@ function! JavaRun(...)
         "silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
         "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
 
+        endif
+
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
-
-
 		silent execute "!echo '' | tee -a jout"
 		silent execute "!echo '' | tee -a jout"
   	    execute "!cat ./jvm.err | tee -a out" 
-        endif
 endfunction
 function! JavaRun2(...)
                 let l:body=[]
