@@ -211,15 +211,15 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let arg = $ARGS
-        if ($PROGRAMVERBOSE != "YYYY")
-		silent execute "!clear"
-	    silent execute "!echo -n 'Java Version : '"
-		silent execute "!javac -version"
-		silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
-		silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
-		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
-		silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
-
+        " if ($PROGRAMVERBOSE != "YYYY")
+        if (1 == 0)
+            silent execute "!clear"
+            silent execute "!echo -n 'Java Version : '"
+            silent execute "!javac -version"
+            silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
+            silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
+            silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
+            silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
             silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
             silent execute "!ls -ld ./classes/* | tee -a out" 
         endif
