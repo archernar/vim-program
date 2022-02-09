@@ -211,6 +211,7 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let arg = $ARGS
+        if ($PROGRAMVERBOSE != "Y")
 		silent execute "!clear"
 	    silent execute "!echo -n 'Java Version : '"
 		silent execute "!javac -version"
@@ -219,7 +220,6 @@ function! JavaRun(...)
 		silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
 		silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
 
-        if ($PROGRAMVERBOSE != "")
             silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
             silent execute "!ls -ld ./classes/* | tee -a out" 
         endif
