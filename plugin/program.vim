@@ -232,7 +232,6 @@ function! JavaRun(...)
   		silent execute "!echo ''"
   		silent execute "!date"
   		silent execute "!echo 'RUN START ****************************************************'"
-  		silent execute "!echo 'RUN START ****************************************************'"
         execute "!" . g:JAVARUN . " " . arg  . ""
 
 "    	    silent execute "!rm -rf out" 
