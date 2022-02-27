@@ -228,11 +228,19 @@ function! JavaRun(...)
                 "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
         endif
 
-  	    silent execute "!rm -rf ./jvm.err | tee -a out" 
-        silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
-		silent execute "!echo '' | tee -a jout"
-		silent execute "!echo 'END RUN ****' | tee -a jout"
-  	    execute "!cat ./jvm.err | tee -a out" 
+        execute "!" . g:JAVARUN . " " . arg  . ""
+
+"    	    silent execute "!rm -rf out" 
+"  		silent execute "!date | tee -a out"
+"  		silent execute "!echo 'RUN START ****' | tee -a out"
+"  		silent execute "!echo '--' | tee -a out"
+"  		silent execute "!echo '--' | tee -a out"
+"    	    silent execute "!rm -rf ./jvm.err | tee -a out" 
+"       silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a jout"
+"  		silent execute "!echo '--' | tee -a out"
+"  		silent execute "!echo '--' | tee -a out"
+"  		silent execute "!echo 'RUN END   ****' | tee -a out"
+  	    " execute "!cat ./jvm.err | tee -a out" 
 endfunction
 function! JavaRun2(...)
                 let l:body=[]
