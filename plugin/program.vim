@@ -228,9 +228,16 @@ function! JavaRun(...)
                 "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
         endif
 
-  		silent execute "!date | tee -a out"
-  		silent execute "!echo 'RUN START ****' | tee -a out"
+  		silent execute "!echo ''"
+  		silent execute "!echo ''"
+  		silent execute "!date"
+  		silent execute "!echo 'RUN START ****************************************************'"
         execute "!" . g:JAVARUN . " " . arg  . ""
+  		silent execute "!echo ''"
+  		silent execute "!echo ''"
+  		silent execute "!echo 'RUN END   ****************************************************'"
+  		silent execute "!echo ''"
+  		silent execute "!echo ''"
 
 "    	    silent execute "!rm -rf out" 
 "  		silent execute "!date | tee -a out"
