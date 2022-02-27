@@ -231,7 +231,7 @@ function! JavaRun(...)
   	    silent execute "!rm -rf ./jvm.err | tee -a out" 
         silent execute "!" . g:JAVARUN . " " . arg  . " | tee -a out"
 		silent execute "!echo '' | tee -a jout"
-		silent execute "!echo '' | tee -a jout"
+		silent execute "!echo 'END RUN ****' | tee -a jout"
   	    execute "!cat ./jvm.err | tee -a out" 
 endfunction
 function! JavaRun2(...)
