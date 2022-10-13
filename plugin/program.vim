@@ -64,22 +64,28 @@ endfunction
 function! JavaLocal(...)
     silent let l:n = 0
     silent set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
-    silent let g:JAVACOMPILE="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . shellescape(expand('%:p'))
+    silent let l:classdir = "./classes"
+    if ($CLASSDIR != "")
+        silent let l:classdir = $CLASSDIR
+    endif
+    silent let g:JAVACOMPILE="export CLASSPATH=" . l:classdir . ";javac -nowarn -d " . l:classdir . " " . shellescape(expand('%:p'))
+    silent let g:JAVACOMPILE="javac -nowarn -d " . l:classdir . " " . shellescape(expand('%:p'))
     silent let g:JAVACOMPILEALL="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . JavaFileList()
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
     silent let g:OPTARGS="-verbose:class -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=./jvm.log"
     silent let g:OPTARGS=""
-    silent let g:JVMCMD =   "java" . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","") . " " . $ARGS . "  2> ./jvm.err"
+    silent let g:JVMCMD =   "java -cp " . l:classdir . " " . g:OPTARGS . " " . g:Strreplace(expand("%:t"),".java","") . " " . $ARGS . "  2> ./jvm.err"
     silent let g:JAVARUN =   "export CLASSPATH=" . $CLASSPATH . ";" . g:JVMCMD
+    silent let g:JAVARUN =   g:JVMCMD
 
-    call s:LogMessage(" ")
-    call s:LogMessage("JAVA RUN")
-    call s:LogMessage(g:JAVARUN)
-    call s:LogMessage(" ")
-    call s:LogMessage("JAVA COMPILE")
-    call s:LogMessage(g:JAVACOMPILE)
-    call s:LogMessage(" ")
+"   call s:LogMessage(" ")
+"   call s:LogMessage("JAVA RUN")
+"   call s:LogMessage(g:JAVARUN)
+"   call s:LogMessage(" ")
+"   call s:LogMessage("JAVA COMPILE")
+"   call s:LogMessage(g:JAVACOMPILE)
+"   call s:LogMessage(" ")
 endfunction
 
 function! ProgramCompile(...)
@@ -133,6 +139,7 @@ function! JavaCompile(...)
            silent call BiModeSet(0)
            resize 10
         endif
+        echom g:JAVACOMPILE
 endfunction
 
 function! JavaCompileAll(...)
@@ -192,27 +199,17 @@ function! JavaRun(...)
 			let idx = idx + 1
 		endwhile
         let arg = $ARGS
-            " if ($PROGRAMVERBOSE != "YYYY")
             if (1 == 1)
                 silent execute "!clear"
-                silent execute "!echo -n 'Java Version : '"
+                silent execute "!echo -n 'Java Ver : '"
                 silent execute "!javac -version"
-                silent execute "!echo 'Class Path is: " . $CLASSPATH    . "' | tee -a jout"
-                silent execute "!echo 'Compiled with: " . g:JAVACOMPILE . "' | tee -a jout"
-                silent execute "!echo 'Executed with: " . g:JVMCMD      . "' | tee -a jout"
-                silent execute "!echo 'set PROGRAMVERBOSE=Y for more details' | tee -a jout"
-                silent execute "!echo './classes    : " . ""            . "' | tee -a jout"
-                silent execute "!ls -ld ./classes/* | tee -a out" 
-                silent execute "!print '" . repeat('-', 100 - 0 )         "' | tee -a out" 
+                silent execute "!echo 'CLASSPATH: " . $CLASSPATH    . "' | tee -a jout"
+                silent execute "!echo 'CLASSDIR : " . $CLASSDIR     . "' | tee -a jout"
+                silent execute "!echo 'Compile  : " . g:JAVACOMPILE . "' | tee -a jout"
+                silent execute "!echo 'Execute  : " . g:JVMCMD      . "' | tee -a jout"
             endif
-                "silent execute "!ls ~/classes | gawk '{printf("%-26s ",$1);if ((NR%4)==0) printf("\n"); }END {if ((NR%4)!=0) printf("\n");}'"
-                "silent execute "!cat -n " . expand("%:p") .  " | gawk '/^$/ {next} /^[ ]*[/][/]/ {next} {print $0}'  | tee -a out" 
         endif
-
-  		silent execute "!echo ''"
-  		silent execute "!echo ''"
-  		silent execute "!date"
-  		silent execute "!echo 'RUN START ****************************************************'"
+  		silent execute "!echo '+ ------------------------------------------------------------------ +'"
         execute "!" . g:JAVARUN . " " . arg  . ""
 endfunction
 
