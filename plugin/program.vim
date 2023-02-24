@@ -139,7 +139,8 @@ function! JavaCompile(...)
            silent call BiModeSet(0)
            resize 10
         endif
-        echom g:JAVACOMPILE . "  " . "YYYY"
+		"silent execute "!java -version 2>&1 | grep versi"
+        echom g:JAVACOMPILE 
 endfunction
 
 function! JavaCompileAll(...)
