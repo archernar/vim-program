@@ -131,7 +131,7 @@ function! JavaCompile(...)
         update
         cclose
         silent echom expand("%:p") 
-        silent echom g:JAVACOMPILE
+        silent echom g:JAVACOMPILE . "  " . "XX"
         cexpr system(g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
