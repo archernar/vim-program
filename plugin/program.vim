@@ -139,7 +139,7 @@ function! JavaCompile(...)
            silent call BiModeSet(0)
            resize 10
         endif
-        echom g:JAVACOMPILE
+        echom g:JAVACOMPILE . "  " . "YYYY"
 endfunction
 
 function! JavaCompileAll(...)
