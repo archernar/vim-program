@@ -61,6 +61,18 @@ function! PythonLocal(...)
     silent let g:PYTHONRUN =   "python  " . "" . expand("%")
 endfunction
 
+function! RunCLI(...)
+  let l:counter = 1
+  let l:cl = ""
+  while l:counter <= a:0
+    let l:cl = a:{l:counter}
+    call s:LogMessage(l:counter . " CLI COMMAND: " . l:cl)
+    cexpr system(l:cl)
+    let l:counter += 1
+  endwhile
+  return l:counter
+endfunction
+
 function! JavaLocal(...)
     silent let l:n = 0
     silent set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
@@ -70,6 +82,19 @@ function! JavaLocal(...)
     endif
     silent let g:JAVACOMPILE="export CLASSPATH=" . l:classdir . ";javac -nowarn -d " . l:classdir . " " . shellescape(expand('%:p'))
     silent let g:JAVACOMPILE="javac -nowarn -d " . l:classdir . " " . shellescape(expand('%:p'))
+    
+    silent let l:szSrc=expand("%:t")
+    silent let l:szClass=g:Strreplace(expand("%:t"),".java","")
+    silent let l:szFile=g:Strreplace(expand("%:t"),".java",".mf")
+    silent let g:JAVAMANIFEST1="echo 'Manifest-Version: 1.0'                                                       > ./classes/" .  shellescape(g:Strreplace(expand("%:t"),".java",".mf"))
+    silent let g:JAVAMANIFEST2="echo 'Main-Class:  " . l:szClass . "' >> ./classes/" .  l:szFile
+
+    silent let g:JAVAMANIFEST3a="find ./classes -type f -mmin -1 | egrep 'class$' | gawk '{printf $0 \" \" }' > ./classes/classlist.txt"
+    call s:LogMessage(g:JAVAMANIFEST3a)
+
+    silent let g:JAVAMANIFEST3b="jar cfm ./classes/". l:szClass . ".jar ./classes/"  . l:szClass . ".mf ./classes/*.class"
+    silent let g:JAVAMANIFEST3c="javadoc -d ./javadoc " . l:szSrc
+
     silent let g:JAVACOMPILEALL="export CLASSPATH=" . $CLASSPATH . ";javac -nowarn -d ./classes " . JavaFileList()
     silent let g:OPTARGS_SAMPLE="export JVM_OPTARGS=\"-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log\""
     silent let g:OPTARGS="-Xms1024m -Xmx2048m -Xss100m  -XX:+UnlockDiagnosticVMOptions -XX:+LogVMOutput -XX:LogFile=/tmp/jvm.log"
@@ -132,18 +157,23 @@ function! JavaCompile(...)
         cclose
         silent echom expand("%:p") 
         silent echom g:JAVACOMPILE . "  " . "XX"
-        cexpr system(g:JAVACOMPILE)
+        call RunCLI(g:JAVAMANIFEST1,g:JAVAMANIFEST2,g:JAVACOMPILE)
         cw
         " Check if current window contains quickfix buffer (if cw opened  quickfix)
         if getbufvar(winbufnr(winnr()), '&buftype') == 'quickfix'
            silent call BiModeSet(0)
            resize 10
+        else
+            call RunCLI(g:JAVAMANIFEST3a, g:JAVAMANIFEST3b)
         endif
+        "find ./classes -type f -mmin -1 | egrep "class$"
 		"silent execute "!java -version 2>&1 | grep versi"
         echom g:JAVACOMPILE 
 endfunction
 
 function! JavaCompileAll(...)
+        call s:LogMessage("Compile All")
+
         silent execute "normal "
         silent call JavaLocal()
         update
